@@ -1,4 +1,4 @@
-package uzi.utm.hellofirebase;
+package uzi.utm.hellofirebase.UI;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +15,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+import uzi.utm.hellofirebase.R;
+
+public class RegisterActivity extends AppCompatActivity {
 
     private EditText etPassword;
     private EditText etEmail;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register_email);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPsw);
         btnRegister = findViewById(R.id.btnRegister);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Authentication failed.: " + task.getException().getMessage(),
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
