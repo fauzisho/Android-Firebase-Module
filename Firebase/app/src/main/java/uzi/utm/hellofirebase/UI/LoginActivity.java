@@ -1,4 +1,4 @@
-package uzi.utm.hellofirebase.UI;
+package uzi.utm.hellofirebase.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
