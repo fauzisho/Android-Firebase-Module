@@ -76,7 +76,7 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseViewHolder>
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        holder.bind(get(position));
+        holder.bind(get(position), position);
     }
 
     @LayoutRes

@@ -27,7 +27,7 @@ public class DataViewHolder extends BaseViewHolder<Data> {
     }
 
     @Override
-    public void bind(final Data item) {
+    public void bind(final Data item, final int position) {
         fullname.setText(item.getName());
         id.setText(item.getId());
 
@@ -41,7 +41,7 @@ public class DataViewHolder extends BaseViewHolder<Data> {
         rlData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listen.onUpdateData(item);
+                listen.onUpdateData(item,position);
             }
         });
     }

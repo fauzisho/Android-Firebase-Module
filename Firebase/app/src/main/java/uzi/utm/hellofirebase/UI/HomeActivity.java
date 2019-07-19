@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
     private DataAdapter adapter;
     private Button btnAdd;
     private DatabaseReference databaseReference;
+    private int position;
 
 
     @Override
@@ -83,7 +84,10 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText(HomeActivity.this, "onChildChanged.", Toast.LENGTH_SHORT).show();
+                Gson gson = new Gson();
+                Data data = gson.fromJson(dataSnapshot.getValue().toString(), Data.class);
+                adapter.updateItemAt(position, data);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -111,7 +115,7 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     snapshot.getRef().removeValue();
                 }
                 adapter.remove(data);
@@ -126,7 +130,10 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
     }
 
     @Override
-    public void onUpdateData(Data data) {
-        Toast.makeText(HomeActivity.this, "onUpdateData", Toast.LENGTH_SHORT).show();
+    public void onUpdateData(Data data, int position) {
+        this.position = position;
+        Intent intent = new Intent(this, UpdateActivity.class);
+        intent.putExtra("data", data);
+        startActivity(intent);
     }
 }

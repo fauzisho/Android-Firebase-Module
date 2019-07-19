@@ -4,5 +4,5 @@ import uzi.utm.hellofirebase.model.Data;
 
 public interface DataInterface {
     void onDeleteData(Data data);
-    void onUpdateData(Data data);
+    void onUpdateData(Data data, int position);
 }

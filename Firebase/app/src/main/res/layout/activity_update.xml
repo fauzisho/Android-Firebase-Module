@@ -35,6 +35,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
     <EditText
         android:id="@+id/etFullname"
         android:layout_width="match_parent"
