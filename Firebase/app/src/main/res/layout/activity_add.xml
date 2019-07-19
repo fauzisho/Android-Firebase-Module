@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -18,32 +18,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Home"
+                android:text="Add Data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/ivLogout"
+                android:id="@+id/ivAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_swich" />
+                android:padding="10dp"
+                android:src="@drawable/ic_add_circle_outline_black_24dp"
+                android:tint="@color/colorWhite" />
+
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btnAdd"
-        android:layout_below="@+id/toolbar" />
-
-    <Button
-        android:id="@+id/btnAdd"
+    <EditText
+        android:id="@+id/etId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Add Data" />
+        android:hint="id" />
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/etFullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fullname" />
+</LinearLayout>
