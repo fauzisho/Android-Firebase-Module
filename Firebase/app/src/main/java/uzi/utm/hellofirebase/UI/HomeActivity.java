@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 import uzi.utm.hellofirebase.R;
 import uzi.utm.hellofirebase.adapter.DataAdapter;
 import uzi.utm.hellofirebase.model.Data;
@@ -32,7 +30,6 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView rvList;
     private FirebaseAuth mAuth;
     private DataAdapter adapter;
-    private ArrayList<Data> listData;
     private Button btnAdd;
     private DatabaseReference databaseReference;
 
@@ -54,7 +51,8 @@ public class HomeActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        adapter.addAll(listData);
+
+        rvList.setAdapter(adapter);
 
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,29 +73,29 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Gson gson = new Gson();
-                Data data = gson.fromJson(dataSnapshot.getValue().toString(),Data.class);
+                Data data = gson.fromJson(dataSnapshot.getValue().toString(), Data.class);
                 adapter.add(data);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "onChildChanged.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "onChildRemoved.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "onChildMoved", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "onCancelled", Toast.LENGTH_SHORT).show();
             }
         });
     }
