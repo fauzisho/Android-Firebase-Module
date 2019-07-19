@@ -19,6 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import uzi.utm.hellofirebase.R;
@@ -45,7 +47,7 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
 
         mAuth = FirebaseAuth.getInstance();
 
-        adapter = new DataAdapter(this,this);
+        adapter = new DataAdapter(this, this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
         //dummy data
@@ -102,8 +104,25 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
     }
 
     @Override
-    public void onDeleteData(Data data) {
+    public void onDeleteData(final Data data) {
         Toast.makeText(HomeActivity.this, "onDeleteData", Toast.LENGTH_SHORT).show();
+        Query query = databaseReference.child("data").orderByChild("id").equalTo(data.id);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    snapshot.getRef().removeValue();
+                }
+                adapter.remove(data);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
