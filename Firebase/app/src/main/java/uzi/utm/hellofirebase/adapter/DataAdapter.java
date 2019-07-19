@@ -8,13 +8,17 @@ import uzi.utm.hellofirebase.model.Data;
 import uzi.utm.hellofirebase.util.BaseRecyclerViewAdapter;
 
 public class DataAdapter extends BaseRecyclerViewAdapter<Data, DataViewHolder> {
-    public DataAdapter(Context context) {
+    private DataInterface listen;
+
+
+    public DataAdapter(Context context, DataInterface listen) {
         super(context);
+        this.listen = listen;
     }
 
     @Override
     protected DataViewHolder initViewHolder(View view) {
-        return new DataViewHolder(view);
+        return new DataViewHolder(view, listen);
     }
 
     @Override

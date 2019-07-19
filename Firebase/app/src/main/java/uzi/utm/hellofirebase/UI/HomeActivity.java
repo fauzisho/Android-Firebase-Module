@@ -23,9 +23,10 @@ import com.google.gson.Gson;
 
 import uzi.utm.hellofirebase.R;
 import uzi.utm.hellofirebase.adapter.DataAdapter;
+import uzi.utm.hellofirebase.adapter.DataInterface;
 import uzi.utm.hellofirebase.model.Data;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements DataInterface {
     private ImageView ivLogout;
     private RecyclerView rvList;
     private FirebaseAuth mAuth;
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        adapter = new DataAdapter(this);
+        adapter = new DataAdapter(this,this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
         //dummy data
@@ -98,5 +99,15 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(HomeActivity.this, "onCancelled", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onDeleteData(Data data) {
+        Toast.makeText(HomeActivity.this, "onDeleteData", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUpdateData(Data data) {
+        Toast.makeText(HomeActivity.this, "onUpdateData", Toast.LENGTH_SHORT).show();
     }
 }
