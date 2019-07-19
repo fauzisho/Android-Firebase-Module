@@ -3,14 +3,23 @@ package uzi.utm.hellofirebase.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -24,6 +33,9 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DataAdapter adapter;
     private ArrayList<Data> listData;
+    private Button btnAdd;
+    private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ivLogout = findViewById(R.id.ivLogout);
         rvList = findViewById(R.id.rvList);
+        btnAdd = findViewById(R.id.btnAdd);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -39,30 +52,53 @@ public class HomeActivity extends AppCompatActivity {
 
         //dummy data
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        listData = new ArrayList<Data>() {
-            {
-                add(new Data("10111", "Fauzisho"));
-                add(new Data("10111", "Fauzisho"));
-                add(new Data("10111", "Fauzisho"));
-            }
-        };
         adapter.addAll(listData);
-        rvList.setAdapter(adapter);
 
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                UILogin();
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, AddActivity.class));
+            }
+        });
+
+        databaseReference.child("data").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Gson gson = new Gson();
+                Data data = gson.fromJson(dataSnapshot.getValue().toString(),Data.class);
+                adapter.add(data);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(HomeActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    public void UILogin() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
-
-
 }
