@@ -2,13 +2,18 @@ package uzi.utm.hellofirebase;
 
 import android.app.Application;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 public class App extends Application {
+    private static App INSTANCE;
 
+
+    public static App getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        INSTANCE = this;
     }
 }
