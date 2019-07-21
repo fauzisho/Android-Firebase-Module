@@ -37,7 +37,6 @@ public class AddActivity extends AppCompatActivity {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Data data = new Data("" + etId.getText().toString() + "", etFullname.getText().toString());
 
                 databaseReference.child("data").push().setValue(data, new DatabaseReference.CompletionListener() {

@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onRegister() {
+
         mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -59,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
     public void updateUI(FirebaseUser user) {
