@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import uzi.utm.hellofirebase.R;
 import uzi.utm.hellofirebase.adapter.DataAdapter;
@@ -76,16 +75,14 @@ public class HomeActivity extends AppCompatActivity implements DataInterface {
         databaseReference.child("data").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Gson gson = new Gson();
-                Data data = gson.fromJson(dataSnapshot.getValue().toString(), Data.class);
+                Data data = new Data(dataSnapshot.child("id").getValue().toString(), dataSnapshot.child("name").getValue().toString());
                 adapter.add(data);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Gson gson = new Gson();
-                Data data = gson.fromJson(dataSnapshot.getValue().toString(), Data.class);
+                Data data = new Data(dataSnapshot.child("id").getValue().toString(), dataSnapshot.child("name").getValue().toString());
                 adapter.updateItemAt(position, data);
                 adapter.notifyDataSetChanged();
             }
