@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Add Data"
+                android:text="Update Data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
